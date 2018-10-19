@@ -13,11 +13,11 @@ class ButtonSmall extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
     if (this.props.id === "clear") {
       this.props.clear();
     } else if (this.props.id === "subtract") {
-      this.props.subtract();
+      this.props.subtract(this.props.display);
     } else if (this.props.id === "multiply") {
       this.props.multiply();
     } else if (this.props.id === "divide") {

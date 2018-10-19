@@ -31,10 +31,8 @@ class Calculator extends Component {
 
 const mapStateToProps = state => {
   const displayValue = getDisplay(state);
-  const displayHistory = getHistory(state);
   return ({
     display: displayValue,
-    history: displayHistory
   });
 };
 

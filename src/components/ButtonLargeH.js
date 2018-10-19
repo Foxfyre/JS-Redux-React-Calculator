@@ -12,9 +12,7 @@ class ButtonLargeH extends Component {
   }
 
   handleClick() {
-    if (this.props.id === "add") {
-      this.props.addition();
-    }
+    this.props.display(this.props.value);
   }
 
   render() {
@@ -35,8 +33,6 @@ class ButtonLargeH extends Component {
 
 const mapDispatchToProps = dispatch => ({
   display: display => dispatch(updateDisplay(display)),
-  add: display => dispatch(addition(display)),
-  equal: display => dispatch(equal(display)),
 });
 
 export default connect(

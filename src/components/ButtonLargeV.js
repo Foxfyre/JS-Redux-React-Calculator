@@ -31,8 +31,8 @@ class ButtonLargeV extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  add: input => dispatch(addition(input)),
-  equal: input => dispatch(equal(input)),
+  add: display => dispatch(addition(display)),
+  equal: display => dispatch(equal(display)),
 });
 
 export default connect(

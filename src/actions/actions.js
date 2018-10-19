@@ -9,7 +9,7 @@ import { EQUAL } from "./actionTypes";
 export const updateDisplay = content => ({
   type: UPDATE, 
   payload: {
-    display: content,
+    input: content,
     operation: "num"
   }
 })

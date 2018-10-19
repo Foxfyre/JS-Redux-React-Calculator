@@ -19,8 +19,8 @@ export default function (state = initialState, action) {
 
 
     case UPDATE: {
-      console.log(state.display);
       const updateDisplay = action.payload;
+      console.log(action.payload);
       if (state.display.includes('.') && updateDisplay.display === ".") {
         return {
           ...state,
@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
       } else {
         return {
           ...state,
-          display: state.display == '0' || state.prevOp === "operator" ? updateDisplay.display : state.display + updateDisplay.display,
+          display: state.display == '0' || state.prevOp === "operator" ? updateDisplay.input : state.display + updateDisplay.input,
           prevOp: updateDisplay.operation
         }
       }
@@ -65,6 +65,7 @@ export default function (state = initialState, action) {
 
     case MULTIPLY: {
       const payload = action.payload;
+      console.log(payload);
       let accumulator = state.accumulated;
       let product = accumulator * parseInt(state.display);
       return {
