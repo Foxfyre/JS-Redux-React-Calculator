@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateDisplay } from "../actions/actions";
 import { clearDisplay } from "../actions/actions";
+import { subtraction } from "../actions/actions";
+import { multiplication } from "../actions/actions";
+import { division } from "../actions/actions";
 import "../css/buttons.css";
 
 class ButtonSmall extends Component {
@@ -13,6 +16,12 @@ class ButtonSmall extends Component {
   handleClick() {
     if (this.props.id === "clear") {
       this.props.clear();
+    } else if (this.props.id === "subtract") {
+      this.props.subtract();
+    } else if (this.props.id === "multiply") {
+      this.props.multiply();
+    } else if (this.props.id === "divide") {
+      this.props.divide();
     } else {
       this.props.display(this.props.value);
     }
@@ -32,10 +41,11 @@ class ButtonSmall extends Component {
   }
 }
 
-/*export default ButtonSmall;*/
-
 const mapDispatchToProps = dispatch => ({
   display: display => dispatch(updateDisplay(display)),
+  subtract: display => dispatch(subtraction(display)),
+  multiply: display => dispatch(multiplication(display)),
+  divide: display => dispatch(division(display)),
   clear: display => dispatch(clearDisplay(display))
 });
 
