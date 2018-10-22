@@ -17,7 +17,6 @@ export const updateDisplay = content => ({
 export const addition = content => ({
   type: ADD,
   payload: {
-    input: content,
     operation: "operator"
   }
 });
@@ -25,7 +24,6 @@ export const addition = content => ({
 export const subtraction = content => ({
   type: SUBTRACT,
   payload: {
-    input: content,
     operation: "operator"
   }
 })
@@ -33,7 +31,6 @@ export const subtraction = content => ({
 export const multiplication = content => ({
   type: MULTIPLY,
   payload: {
-    input: content,
     operation: "operator"
   }
 });
@@ -41,18 +38,20 @@ export const multiplication = content => ({
 export const division = content => ({
   type: DIVIDE,
   payload: {
-    input: content,
     operation: "operator"
   }
 });
 
 export const clearDisplay = content => ({
   type: CLEAR,
+  payload: {
+    operation: "clear"
+  }
 })
 
 export const equal = content => ({
   type: EQUAL,
   payload: {
-    input: content,
+    operation: "equal"
   }
 })

@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "mathjs": "5.2.1",
     "react": "16.5.2",
     "react-dom": "16.5.2",
     "react-redux": "5.0.7",

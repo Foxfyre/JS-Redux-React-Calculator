@@ -5,11 +5,13 @@ import { DIVIDE } from "../actions/actionTypes";
 import { UPDATE } from "../actions/actionTypes";
 import { CLEAR } from "../actions/actionTypes";
 import { EQUAL } from "../actions/actionTypes";
+import * as math from 'mathjs'
 
 const initialState = {
   display: '0',
   prevOp: "",
-  accumulated: 0
+  accumulated: "0",
+  history: '0'
 }
 
 
@@ -21,70 +23,66 @@ export default function (state = initialState, action) {
     case UPDATE: {
       const updateDisplay = action.payload;
       console.log(action.payload);
-      if (state.display.includes('.') && updateDisplay.display === ".") {
+      if (state.display.includes('.') && updateDisplay.input === ".") {
         return {
           ...state,
         }
       } else {
         return {
           ...state,
-          display: state.display == '0' || state.prevOp === "operator" ? updateDisplay.input : state.display + updateDisplay.input,
-          prevOp: updateDisplay.operation
+          display: state.display == '0' || state.prevOp === "operator" ? updateDisplay.input
+            : state.display + updateDisplay.input,
+          prevOp: updateDisplay.operation,
         }
       }
     }
 
 
     case ADD: {
-      const payload = action.payload;
-      console.log(payload);
-      let n1 = state.accumulated;
-      let n2 = parseInt(payload.input);
-      let sum = n1 + n2;
 
       return {
         ...state,
-        display: sum.toString(),
-        accumulated: sum,
-        prevOp: payload.operation
+        display: state.display,
+        history: state.history == '0' && state.accumulated == "0" ? state.display + " + "
+          : state.accumulated != "0" ? state.accumulated + " + "
+            : state.history + state.display + " + ",
+        prevOp: "operator"
       }
     }
 
     case SUBTRACT: {
-      const payload = action.payload;
-      console.log(payload);
-      let accumulator = state.accumulated;
-      let difference = accumulator - parseInt(payload.input);
+
       return {
         ...state,
-        display: difference.toString(),
-        accumulated: difference,
-        prevOp: payload.operation
+        display: state.display,
+        history: state.history == '0' && state.accumulated == "0" ? state.display + " - "
+          : state.accumulated != "0" ? state.accumulated + " - "
+            : state.history + state.display + " - ",
+        prevOp: "operator"
       }
     }
 
     case MULTIPLY: {
-      const payload = action.payload;
-      console.log(payload);
-      let accumulator = state.accumulated;
-      let product = accumulator * parseInt(state.display);
+
       return {
         ...state,
-        display: product.toString(),
-        accumulated: product,
-        prevOp: payload.operation
+        display: state.display,
+        history: state.history == '0' && state.accumulated == "0" ? state.display + " * "
+          : state.accumulated != "0" ? state.accumulated + " * "
+            : state.history + state.display + " * ",
+        prevOp: "operator"
       }
     }
 
     case DIVIDE: {
-      const payload = action.payload;
-      let accumulator = state.accumulated;
-      let quotient = accumulator / parseInt(state.display);
+
       return {
         ...state,
-        display: quotient.toString(),
-        accumulated: quotient,
-        prevOp: payload.operation
+        display: state.display,
+        history: state.history == '0' && state.accumulated == "0" ? state.display + " / "
+          : state.accumulated != "0" ? state.accumulated + " / "
+            : state.history + state.display + " / ",
+        prevOp: "operator"
       }
     }
 
@@ -92,17 +90,25 @@ export default function (state = initialState, action) {
       return {
         ...state,
         display: '0',
-        operation: "",
-        accumulated: 0
+        prevOp: "clear",
+        accumulated: 0,
+        history: "0"
       }
     }
 
     case EQUAL: {
-
+      let states = state.history + state.display;
+      let maths = math.eval(states);
+      console.log(maths);
 
       return {
         ...state,
-        //display: sum,
+        history: maths.toString(),
+        //history: state.history + state.display,
+        display: maths.toString(),
+        accumulated: maths.toString(),
+        prevOp: "equal",
+
       }
     }
     default:

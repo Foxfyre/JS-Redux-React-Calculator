@@ -10,20 +10,20 @@ import "../css/buttons.css";
 class ButtonSmall extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClicks = this.handleClicks.bind(this);
   }
 
-  handleClick(e) {
+  handleClicks(e) {
     if (this.props.id === "clear") {
       this.props.clear();
     } else if (this.props.id === "subtract") {
       this.props.subtract(this.props.display);
     } else if (this.props.id === "multiply") {
-      this.props.multiply();
+      this.props.multiply(this.props.display);
     } else if (this.props.id === "divide") {
-      this.props.divide();
+      this.props.divide(this.props.display);
     } else {
-      this.props.display(this.props.value);
+      this.props.updateDisplay(this.props.button);
     }
   }
 
@@ -33,7 +33,7 @@ class ButtonSmall extends Component {
         id={this.props.id}
         value={this.props.value}
         className="button-small"
-        onClick={this.handleClick}
+        onClick={this.handleClicks}
       >
         {this.props.button}
       </button>
@@ -42,12 +42,14 @@ class ButtonSmall extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  display: display => dispatch(updateDisplay(display)),
+  updateDisplay: display => dispatch(updateDisplay(display)),
   subtract: display => dispatch(subtraction(display)),
   multiply: display => dispatch(multiplication(display)),
   divide: display => dispatch(division(display)),
   clear: display => dispatch(clearDisplay(display))
 });
+
+
 
 export default connect(
   null,
