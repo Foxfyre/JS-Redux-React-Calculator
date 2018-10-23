@@ -1,7 +1,7 @@
 .calculator-body {
   width: 400px;
   height: 600px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: -5px 8px 10px 5px darkmagenta;
 }
 

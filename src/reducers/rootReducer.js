@@ -110,17 +110,22 @@ export default function (state = initialState, action) {
     case EQUAL: {
       let states = state.history + state.display;
       let maths = math.eval(states);
-      console.log(maths);
 
-      return {
-        ...state,
-        history: maths.toString(),
-        display: maths.toString(),
-        accumulated: maths.toString(),
-        prevOp: "equal",
-
+      if (state.prevOp === "equal") {
+        return {
+          ...state
+        }
+      } else {
+        return {
+          ...state,
+          history: maths.toString(),
+          display: maths.toString(),
+          accumulated: maths.toString(),
+          prevOp: "equal",
+        }
       }
     }
+
     default:
       return state;
   }
