@@ -6,6 +6,9 @@ import { DIVIDE } from "./actionTypes";
 import { CLEAR } from "./actionTypes";
 import { EQUAL } from "./actionTypes";
 
+/*actions below pass operation through to reducer, update has input to update the display field.
+ others require no data to be passed. */
+
 export const updateDisplay = content => ({
   type: UPDATE, 
   payload: {

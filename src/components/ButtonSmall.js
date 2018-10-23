@@ -12,7 +12,7 @@ class ButtonSmall extends Component {
     super(props);
     this.handleClicks = this.handleClicks.bind(this);
   }
-
+  // for each click, corresponding action is dispatched. 
   handleClicks(e) {
     if (this.props.id === "clear") {
       this.props.clear();

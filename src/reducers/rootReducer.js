@@ -15,14 +15,13 @@ const initialState = {
 }
 
 
-
 export default function (state = initialState, action) {
   switch (action.type) {
 
 
     case UPDATE: {
       const updateDisplay = action.payload;
-      console.log(action.payload);
+      // dont update if one decimal is already present in display value. return state
       if (state.display.includes('.') && updateDisplay.input === ".") {
         return {
           ...state,
@@ -30,6 +29,7 @@ export default function (state = initialState, action) {
       } else {
         return {
           ...state,
+          // if display is at 0, normally from being cleared, or prev button was operator, overwrite 0 or value
           display: state.display == '0' || state.prevOp === "operator" ? updateDisplay.input
             : state.display + updateDisplay.input,
           prevOp: updateDisplay.operation,
@@ -38,54 +38,65 @@ export default function (state = initialState, action) {
     }
 
 
+    // when operator actions are fired, remove last entry if double operator used, set history as ongoing string. 
     case ADD: {
+
+      const history = () => state.prevOp === "operator" ? state.history.slice(0, state.history.length - 4)
+        : state.history;
 
       return {
         ...state,
         display: state.display,
         history: state.history == '0' && state.accumulated == "0" ? state.display + " + "
           : state.accumulated != "0" ? state.accumulated + " + "
-            : state.history + state.display + " + ",
+            : history() + state.display + " + ",
         prevOp: "operator"
       }
     }
 
     case SUBTRACT: {
 
+      const history = () => state.prevOp === "operator" ? state.history.slice(0, state.history.length - 4)
+        : state.history;
+
       return {
         ...state,
         display: state.display,
         history: state.history == '0' && state.accumulated == "0" ? state.display + " - "
           : state.accumulated != "0" ? state.accumulated + " - "
-            : state.history + state.display + " - ",
+            : history() + state.display + " - ",
         prevOp: "operator"
       }
     }
 
     case MULTIPLY: {
+      const history = () => state.prevOp === "operator" ? state.history.slice(0, state.history.length - 4)
+        : state.history;
 
       return {
         ...state,
         display: state.display,
         history: state.history == '0' && state.accumulated == "0" ? state.display + " * "
           : state.accumulated != "0" ? state.accumulated + " * "
-            : state.history + state.display + " * ",
+            : history() + state.display + " * ",
         prevOp: "operator"
       }
     }
 
     case DIVIDE: {
+      const history = () => state.prevOp === "operator" ? state.history.slice(0, state.history.length - 4)
+        : state.history;
 
       return {
         ...state,
         display: state.display,
         history: state.history == '0' && state.accumulated == "0" ? state.display + " / "
           : state.accumulated != "0" ? state.accumulated + " / "
-            : state.history + state.display + " / ",
+            : history() + state.display + " / ",
         prevOp: "operator"
       }
     }
-
+    // clear resets state
     case CLEAR: {
       return {
         ...state,
@@ -95,7 +106,7 @@ export default function (state = initialState, action) {
         history: "0"
       }
     }
-
+    // equal will concat display to history to give current string. then Maths it from mathJS library. 
     case EQUAL: {
       let states = state.history + state.display;
       let maths = math.eval(states);
@@ -104,7 +115,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         history: maths.toString(),
-        //history: state.history + state.display,
         display: maths.toString(),
         accumulated: maths.toString(),
         prevOp: "equal",
