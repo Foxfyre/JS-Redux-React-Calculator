@@ -119,7 +119,7 @@ export default function (state = initialState, action) {
         return {
           ...state,
           history: maths.toString(),
-          display: maths.toString(),
+          display: math.round(maths,4).toString(),
           accumulated: maths.toString(),
           prevOp: "equal",
         }
