@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
     case UPDATE: {
       const updateDisplay = action.payload;
       // dont update if one decimal is already present in display value. return state
-      if (state.display.includes('.') && updateDisplay.input === ".") {
+      if ((state.display.includes('.') && updateDisplay.input === ".")) {
         return {
           ...state,
         }
